@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+</head>
+<body>
+{% for flight in flights %}
+    <div>{{ flight.id}}: {{ flight.origin_airport.name }}-{{ flight.destination_airport.name }}</div>
+{% endfor %}
+</body>
+</html>
+
