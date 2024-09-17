@@ -13,13 +13,3 @@ python manage.py runserver
 ```bash
 python manage.py migrate
 ```
-
-## Endpoints
-### Hello
-- / - hello from the first App
-- fancy-hello/ - better hello (with header)
-- \<str:name\>/ - personal greeting
-
-### ToDoList
-- todolist/ - list of tasks
-- todolist/add/ - add new task
