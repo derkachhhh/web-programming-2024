@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Article Manager</h1>
+
+    <div class="container">
+        <div class="articles-list">
+            <h2>Articles</h2>
+            <ul id="articles"></ul>
+        </div>
+
+        <div class="article-form">
+            <h2>Add / Update Article</h2>
+            <form id="article-form">
+                <input type="text" id="article-id" placeholder="Article ID (for update/delete)" hidden>
+                <input type="text" id="article-title" placeholder="Article Title" required>
+                <textarea id="article-full-text" placeholder="Full Text" required></textarea>
+                <button type="submit">Add Article</button>
+                <button type="button" class="update">Update Article</button>
+                <button type="button" class="delete">Delete Article</button>
+                <div class="error"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
