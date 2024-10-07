@@ -1,16 +1,30 @@
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, generics, permissions
+from rest_framework.authtoken.admin import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from articles.models import Article
-from articles.serializers import ArticleSerializer
+from articles.permissions import IsOwnerOrReadOnly
+from articles.serializers import ArticleSerializer, UserSerializer
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class ArticleList(APIView):
     """
     List all articles, or create a new article.
     """
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
@@ -19,7 +33,7 @@ class ArticleList(APIView):
     def post(self, request):
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -28,6 +42,10 @@ class ArticleDetail(APIView):
     """
     Retrieve, update or delete a article instance.
     """
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
 
     def get_object(self, pk):
         try:
@@ -44,7 +62,7 @@ class ArticleDetail(APIView):
         article = self.get_object(pk)
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=self.request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
