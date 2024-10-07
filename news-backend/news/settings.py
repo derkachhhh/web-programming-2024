@@ -131,3 +131,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:63342',
     'http://localhost:8001',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
