@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'articles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -130,3 +131,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:63342',
     'http://localhost:8001',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
